@@ -7,7 +7,7 @@ export class Cleanup extends EventEmitter {
     super();
   }
 
-  async run(directory, { olderThan = 90, confirm = false } = {}) {
+  async run(directory, { olderThan = 0, confirm = false } = {}) {
     try {
       const files = await this._getAllFiles(directory);
       const now = Date.now();
@@ -17,14 +17,14 @@ export class Cleanup extends EventEmitter {
       for (const file of files) {
         try {
           const stats = await fs.promises.stat(file);
-          const ageDays = Math.floor((now - stats.mtime.getTime()) / (1000 * 60 * 60 * 24));
+          const ageMs = now - stats.mtime.getTime();
+          const ageDays = Math.floor(ageMs / (1000 * 60 * 60 * 24));
 
-          if (ageDays > olderThan) {
+          if (ageDays >= olderThan) {  // >= замість >, щоб 0 працював як очікується
             const fileInfo = { path: file, size: stats.size, mtime: stats.mtime, ageDays };
             oldFiles.push(fileInfo);
             this.emit('file-found', fileInfo);
           }
-
         } catch (err) {
           this.emit('file-error', { file, error: err });
         }
@@ -47,9 +47,9 @@ export class Cleanup extends EventEmitter {
       this.emit('cleanup-complete', {
         files: oldFiles,
         deletedCount,
+        totalFound: oldFiles.length,
         confirm
       });
-
     } catch (err) {
       this.emit('error', err);
     }

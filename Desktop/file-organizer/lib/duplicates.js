@@ -13,7 +13,7 @@ export class DuplicateFinder extends EventEmitter {
     this.fileHashes = new Map();
   }
 
-  async find(directory) {
+  async findDuplicates(directory) {
     try {
       const files = await this._getAllFiles(directory);
       const totalFiles = files.length;

@@ -78,11 +78,13 @@ program
 
     finder.on('duplicates-found', ({ groups, totalWasted }) => {
       console.log(`\n\nЗнайдено ${groups.length} груп дублікатів:`);
+
       groups.forEach((g, i) => {
-        console.log(`\nГрупа ${i + 1} (${g.paths.length} копії, ${g.size} байт кожна, Wasted: ${g.size * (g.paths.length - 1)} байт)`);
+        console.log(`\nГрупа ${i + 1} (${g.files.length} копії, ${g.size} байт кожна, Wasted: ${g.wasted} байт)`);
         console.log(`  SHA-256: ${g.hash}`);
-        g.paths.forEach((f) => console.log(`  📄 ${f}`));
+        g.files.forEach((f) => console.log(` ${f}`));
       });
+
       console.log(`\nЗагальний wasted space: ${totalWasted} байт`);
     });
 
