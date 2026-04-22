@@ -1,0 +1,101 @@
+body {
+  margin: 0;
+  line-height: normal;
+}
+
+:root {
+
+  --Container-container-large: 1280px;
+  --Max-Width-max-width-large: 768px;
+  --Page-Padding-padding-global: 64px;
+  --Radius-Large: 16px;
+  --Radius-Medium: 16px;
+  --Section-Padding-padding-section-large: 92px;
+  --Section-Padding-padding-section-medium: 80px;
+  --Stroke-Border-Width: 1px;
+  --Text-Sizes-Heading-1: 56px;
+  --Text-Sizes-Heading-2: 48px;
+  --Text-Sizes-Text-Large: 20px;
+  --Text-Sizes-Text-Medium: 18px;
+  --Text-Sizes-Text-Regular: 16px;
+  --Text-Sizes-Text-Small: 14px;
+
+  --Color-Barberry: #e8e81c;
+  --Color-Harlequin: #42ed13;
+  --Color-Neutral-Darkest: #030c01;
+  --Opacity-Neutral-Darkest-15: rgba(3, 12, 1, 0.15);
+
+
+  --color-khaki: #eeee60;
+  --color-white: #fff;
+
+  --gap-4: 4px;
+  --gap-8: 8px;
+  --gap-16: 16px;
+  --gap-20: 20px;
+  --gap-24: 24px;
+  --gap-32: 32px;
+  --gap-40: 40px;
+  --gap-80: 80px;
+
+  --padding-0: 0px;
+  --padding-8: 8px;
+  --padding-10: 10px;
+  --padding-12: 12px;
+  --padding-20: 20px;
+  --padding-24: 24px;
+  --padding-30: 30px;
+  --padding-32: 32px;
+  --padding-39: 39px;
+  --padding-40: 40px;
+  --padding-60: 60px;
+  --padding-80: 80px;
+
+  --br-50: 50%;
+  --br-100: 100px;
+
+  --font-hanuman: Hanuman;
+  --font-roboto: Roboto;
+
+  --fs-16: 16px;
+  --fs-18: 18px;
+  --fs-29: 29px;
+  --fs-38: 38px;
+
+  --border-1: 1px solid var(--Opacity-Neutral-Darkest-15);
+
+  --gradient-1:
+    linear-gradient(104.04deg, var(--Color-Barberry), var(--Color-Harlequin))
+      padding-box,
+    linear-gradient(104.04deg, var(--Color-Barberry), var(--Color-Harlequin))
+      border-box;
+
+  --height-8: 8px;
+  --height-24: 24px;
+  --height-228: 228px;
+  --height-296: 296px;
+  --height-18_9: 18.9px;
+  --width-8: 8px;
+  --width-20: 20px;
+  --width-24: 24px;
+  --width-352: 352px;
+  --width-405: 405px;
+
+  --lh-24: 24px;
+  --lh-35: 35px;
+  --lh-46: 46px;
+
+  --ls--0_01: -0.01;
+
+  --opacity-0_2: 0.2;
+}
+
+a {
+  text-decoration: none; 
+  color: inherit; 
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
