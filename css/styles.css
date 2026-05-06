@@ -1,38 +1,38 @@
 :root {
-  --color-barberry:          #e8e81c;
-  --color-barberry-light:    #eeee60;
-  --color-barberry-lighter:  #fafad1;
+  --color-barberry: #e8e81c;
+  --color-barberry-light: #eeee60;
+  --color-barberry-lighter: #fafad1;
   --color-barberry-lightest: #fcfce8;
-  --color-harlequin:         #42ed13;
-  --color-neutral-darkest:   #030c01;
-  --color-neutral-darker:    #1c241a;
-  --color-neutral-dark:      #4e544d;
-  --color-neutral:           #818580;
-  --color-neutral-light:     #b3b6b2;
-  --color-neutral-lighter:   #d9dad8;
-  --color-neutral-lightest:  #f2f2f2;
-  --color-white:             #ffffff;
+  --color-harlequin: #42ed13;
+  --color-neutral-darkest: #030c01;
+  --color-neutral-darker: #1c241a;
+  --color-neutral-dark: #4e544d;
+  --color-neutral: #818580;
+  --color-neutral-light: #b3b6b2;
+  --color-neutral-lighter: #d9dad8;
+  --color-neutral-lightest: #f2f2f2;
+  --color-white: #ffffff;
 
-  --scheme1-bg:     var(--color-white);
-  --scheme1-text:   var(--color-neutral-darkest);
+  --scheme1-bg: var(--color-white);
+  --scheme1-text: var(--color-neutral-darkest);
   --scheme1-border: rgba(3, 12, 1, 0.15);
 
-  --scheme2-bg:     var(--color-barberry-lighter);
-  --scheme2-text:   var(--color-neutral-darkest);
+  --scheme2-bg: var(--color-barberry-lighter);
+  --scheme2-text: var(--color-neutral-darkest);
 
-  --scheme5-bg:     var(--color-barberry-light);
-  --scheme5-text:   var(--color-neutral-darkest);
+  --scheme5-bg: var(--color-barberry-light);
+  --scheme5-text: var(--color-neutral-darkest);
 
   --font-display: "Hanuman", Helvetica, sans-serif;
-  --font-body:    "Roboto", Helvetica, sans-serif;
+  --font-body: "Roboto", Helvetica, sans-serif;
 
-  --container-max:   1280px;
-  --container-pad:   20px;
-  --section-py:      40px;
+  --container-max: 1280px;
+  --container-pad: 20px;
+  --section-py: 40px;
 
-  --radius-md:   16px;
+  --radius-md: 16px;
   --radius-pill: 100px;
-  --transition:  250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 *,
@@ -102,9 +102,9 @@ blockquote {
 
 .container {
   width: 100%;
-  max-width: calc(var(--container-max) + var(--container-pad) * 2);
-  margin-inline: auto;
-  padding-inline: var(--container-pad);
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 16px;
 }
 
 .btn {
@@ -173,8 +173,9 @@ blockquote {
 }
 
 .btn--wide {
-  width: 100%;
-  max-width: 215px;
+  width: 340px;
+  height: 44px;
+  padding: 0;
 }
 
 .btn:focus-visible {
@@ -194,14 +195,13 @@ blockquote {
   background-color: var(--color-white);
 }
 
-
 .section__header {
   margin-bottom: 32px;
 }
 
 .section__title {
-  font-size: 26px;
-  letter-spacing: -0.26px;
+  font-size: 34px;
+  letter-spacing: -0.34px;
   color: var(--color-neutral-darkest);
   margin-bottom: 16px;
 }
@@ -211,7 +211,7 @@ blockquote {
 }
 
 .section__text {
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.5;
   color: var(--color-neutral-darkest);
 }
@@ -257,7 +257,9 @@ blockquote {
   cursor: pointer;
   color: var(--color-neutral-darkest);
   border-radius: 8px;
-  transition: color var(--transition), background-color var(--transition);
+  transition:
+    color var(--transition),
+    background-color var(--transition);
 }
 
 .burger:hover,
@@ -298,7 +300,9 @@ blockquote {
   align-items: center;
   justify-content: center;
   color: var(--color-neutral-darkest);
-  transition: color var(--transition), transform var(--transition);
+  transition:
+    color var(--transition),
+    transform var(--transition);
 }
 
 .social-link:hover,
@@ -398,7 +402,12 @@ blockquote {
 
 .hero {
   background-image:
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.25) 60%, rgba(255, 255, 255, 0.1) 100%),
+    linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.45) 0%,
+      rgba(255, 255, 255, 0.25) 60%,
+      rgba(255, 255, 255, 0.1) 100%
+    ),
     url("../assets/icons/rectangle-1.svg");
   background-size: cover;
   background-position: center center;
@@ -418,17 +427,20 @@ blockquote {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  max-width: 640px;
+  width: 100%;
+  max-width: 340px;
+  text-align: left;
+  flex-shrink: 0;
 }
 
 .hero__title {
-  font-size: 28px;
-  letter-spacing: -0.28px;
+  font-size: 36px;
+  letter-spacing: -0.36px;
   color: var(--color-neutral-darkest);
 }
 
 .hero__text {
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.5;
   color: var(--color-neutral-darkest);
 }
@@ -455,6 +467,10 @@ blockquote {
   display: flex;
   flex-direction: column;
   gap: 32px;
+}
+
+.bestsellers .section__title {
+  text-align: center;
 }
 
 .products-grid {
@@ -614,6 +630,7 @@ blockquote {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  text-align: center;
 }
 
 .bouquet-card__name {
@@ -769,9 +786,14 @@ blockquote {
 .footer__inner {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 28px;
   padding-bottom: 32px;
+}
+
+.footer__logo {
+  display: flex;
+  justify-content: center;
 }
 
 .footer__logo img {
@@ -781,8 +803,12 @@ blockquote {
 
 .footer__nav {
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px 20px;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .footer__link {
@@ -820,7 +846,11 @@ blockquote {
 @media (min-width: 768px) {
   :root {
     --container-pad: 32px;
-    --section-py:    64px;
+    --section-py: 64px;
+  }
+
+  .bestsellers .section__title {
+    text-align: left;
   }
 
   .mobile-menu__list {
@@ -831,22 +861,33 @@ blockquote {
     display: none;
   }
 
+  /* ── Hero ── */
   .hero {
     background-image:
-      linear-gradient(to right, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.3) 60%, transparent 100%),
+      linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.95) 0%,
+        rgba(255, 255, 255, 0.85) 45%,
+        rgba(255, 255, 255, 0.1) 70%,
+        transparent 100%
+      ),
       url("../assets/icons/rectangle-1.svg");
-    background-position: center;
+    background-position: center right;
     min-height: 520px;
     padding-block: 80px;
   }
 
+  .hero__content {
+    max-width: 380px;
+  }
+
   .hero__title {
-    font-size: 40px;
-    letter-spacing: -0.4px;
+    font-size: 36px;
+    letter-spacing: -0.36px;
   }
 
   .hero__text {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .section__title {
@@ -894,10 +935,6 @@ blockquote {
     height: 260px;
   }
 
-  .btn--wide {
-    max-width: 215px;
-  }
-
   .reviews-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -930,15 +967,34 @@ blockquote {
   }
 
   .footer__inner {
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
+    gap: 32px;
+    padding-bottom: 40px;
+  }
+
+  .footer__logo {
+    display: flex;
+    justify-content: center;
+    flex: unset;
+  }
+
+  .footer__logo img {
+    max-width: 240px;
+  }
+
+  .footer__nav {
+    flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px 32px;
+    flex: unset;
   }
 
   .footer__socials {
-    margin-left: auto;
+    justify-content: center;
+    flex: unset;
   }
 }
 
@@ -956,7 +1012,7 @@ blockquote {
 @media (min-width: 835px) and (max-width: 1023px) {
   :root {
     --container-pad: 48px;
-    --section-py:    72px;
+    --section-py: 72px;
   }
 
   .products-grid {
@@ -993,7 +1049,7 @@ blockquote {
 @media (min-width: 1024px) {
   :root {
     --container-pad: 64px;
-    --section-py:    92px;
+    --section-py: 92px;
   }
 
   .nav,
@@ -1007,6 +1063,19 @@ blockquote {
 
   .hero {
     min-height: 669px;
+    background-image:
+      linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.95) 0%,
+        rgba(255, 255, 255, 0.7) 45%,
+        rgba(255, 255, 255, 0.1) 65%,
+        transparent 100%
+      ),
+      url("../assets/icons/rectangle-1.svg");
+  }
+
+  .hero__content {
+    max-width: 700px;
   }
 
   .hero__title {
@@ -1014,9 +1083,13 @@ blockquote {
     letter-spacing: -0.56px;
   }
 
+  .hero__text {
+    font-size: 18px;
+  }
+
   .section__title {
-    font-size: 46px;
-    letter-spacing: -0.46px;
+    font-size: 48px;
+    letter-spacing: -0.48px;
   }
 
   .about__inner {
@@ -1042,6 +1115,11 @@ blockquote {
 
   .product-card__img {
     height: 300px;
+  }
+
+  .btn--wide {
+    width: 406px;
+    height: 44px;
   }
 
   .bouquets-grid {
@@ -1078,8 +1156,15 @@ blockquote {
   }
 
   .footer__inner {
+    flex-direction: row;
+    align-items: center;
     flex-wrap: nowrap;
     gap: 32px;
+  }
+
+  .footer__logo {
+    flex: 1;
+    justify-content: flex-start;
   }
 
   .footer__logo img {
@@ -1093,6 +1178,8 @@ blockquote {
   }
 
   .footer__socials {
+    flex: 1;
     margin-left: 0;
+    justify-content: flex-end;
   }
 }
