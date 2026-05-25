@@ -1,7 +1,7 @@
 const ITEMS_PER_CLICK = 4;
 
 async function loadAllValidProducts() {
-  const response = await axios.get("/flowers.json");
+  const response = await axios.get("./flowers.json");
   const all = Array.isArray(response.data)
     ? response.data
     : (response.data.products ?? []);

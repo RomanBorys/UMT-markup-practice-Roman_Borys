@@ -1,4 +1,4 @@
-const BASE_URL = "/flowers.json";
+const BASE_URL = "./flowers.json";
 
 
 export async function fetchProductsByPage(page = 1, limit = 8) {
