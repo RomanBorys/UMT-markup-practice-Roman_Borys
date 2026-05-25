@@ -133,7 +133,7 @@
               <div class="product-card">
                 <img
                   class="product-card__img"
-                  src="./assets/images/perfect-gift-wonderful-flowers-womens-day-tender-smiling-brunet-.png"
+                  src="./assets/images/perfect-gift-wonderful-flowers-womens-day-tender-smiling-brunet.png"
                   srcset="
                     ./assets/images/perfect-gift-wonderful-flowers-womens-day-tender-smiling-brunet-@2x.png 2x
                   "
@@ -613,7 +613,7 @@
             class="contacts__img"
             src="./assets/images/photo-florist-holding-beautiful-flowers-flower-shop.png"
             srcset="
-              ./assets/images/photo-florist-holding-beautiful-flowers-flower-shop@2x.png 2x
+              ./assets/images/photo-florist-holding-beautiful-flowers-flower-shop.png 2x
             "
             alt="Florist holding a bouquet inside the flower shop"
             width="640"
@@ -751,6 +751,96 @@
     </div>
     <div class="mobile-menu__overlay" aria-hidden="true"></div>
 
+    <div
+      class="order-backdrop"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="order-modal-title"
+    >
+      <div class="order-modal">
+        <button
+          class="order-modal__close"
+          type="button"
+          aria-label="Close order modal"
+        >
+          <svg class="icon" width="32" height="32" aria-hidden="true">
+            <use href="./assets/icons/icons.svg#icon-close"></use>
+          </svg>
+        </button>
+        <h2 class="order-modal__title" id="order-modal-title">Order</h2>
+        <form class="order-form" id="order-form" novalidate>
+          <div class="order-form__field">
+            <label class="order-form__label" for="order-name">Name*</label>
+            <input
+              class="order-form__input"
+              type="text"
+              id="order-name"
+              name="name"
+              placeholder="Ann"
+              required
+              autocomplete="given-name"
+            />
+          </div>
+          <div class="order-form__field">
+            <label class="order-form__label" for="order-phone">Phone*</label>
+            <input
+              class="order-form__input"
+              type="tel"
+              id="order-phone"
+              name="phone"
+              placeholder="+1 (555) 123-4567"
+              required
+              autocomplete="tel"
+            />
+          </div>
+          <div class="order-form__field">
+            <label class="order-form__label" for="order-address">Adress</label>
+            <input
+              class="order-form__input"
+              type="text"
+              id="order-address"
+              name="address"
+              placeholder="456 Floral Ave, Sydney NSW 2000 AU"
+              autocomplete="street-address"
+            />
+          </div>
+          <div class="order-form__field">
+            <label class="order-form__label" for="order-message">Message</label>
+            <textarea
+              class="order-form__textarea"
+              id="order-message"
+              name="message"
+              placeholder="Type your message..."
+              rows="5"
+            ></textarea>
+          </div>
+          <div class="order-form__footer">
+            <button class="btn btn--primary order-form__submit" type="submit">
+              Go to Checkout
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div
+      class="modal-backdrop"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Product Details"
+    >
+      <div class="modal">
+        <button class="modal__close" type="button" aria-label="Close modal">
+          <svg class="icon" width="24" height="24" aria-hidden="true">
+            <use href="./assets/icons/icons.svg#icon-close"></use>
+          </svg>
+        </button>
+        <div class="modal__body"></div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.7.2/dist/axios.min.js"></script>
     <script src="js/menu.js"></script>
+    <script type="module" src="js/main.js"></script>
   </body>
 </html>
