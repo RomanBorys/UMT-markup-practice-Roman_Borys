@@ -10,7 +10,7 @@ export function initTopBouquetsSlider() {
 
   if (!grid || !prevBtn || !nextBtn) return;
 
-  const items = Array.from(grid.children);
+  const items = Array.from(grid.children); // <li> elements
   const total = items.length;
   if (total === 0) return;
 
@@ -26,7 +26,6 @@ export function initTopBouquetsSlider() {
 
   grid.style.transition = "transform 300ms ease";
   grid.style.willChange = "transform";
-
 
   function getSlideWidth() {
     return clip.offsetWidth;
@@ -81,28 +80,23 @@ export function initTopBouquetsSlider() {
     });
   }
 
+  function setDisabled(btn, disabled) {
+    btn.disabled = disabled;
+    btn.classList.toggle("is-disabled", disabled);
+    btn.style.opacity = "";
+    btn.style.cursor = "";
+  }
+
   function updateArrows() {
     if (isDesktop) {
-      prevBtn.disabled = true;
-      nextBtn.disabled = true;
-      prevBtn.style.opacity = "0.35";
-      nextBtn.style.opacity = "0.35";
-      prevBtn.style.cursor = "default";
-      nextBtn.style.cursor = "default";
+      setDisabled(prevBtn, true);
+      setDisabled(nextBtn, true);
       return;
     }
 
-    const atStart = current === 0;
-    const atEnd = current === total - 1;
-
-    prevBtn.disabled = atStart;
-    nextBtn.disabled = atEnd;
-    prevBtn.style.opacity = atStart ? "0.35" : "";
-    nextBtn.style.opacity = atEnd ? "0.35" : "";
-    prevBtn.style.cursor = atStart ? "default" : "";
-    nextBtn.style.cursor = atEnd ? "default" : "";
+    setDisabled(prevBtn, current === 0);
+    setDisabled(nextBtn, current === total - 1);
   }
-
 
   function setup() {
     isDesktop = window.innerWidth >= BREAKPOINT;
@@ -115,7 +109,6 @@ export function initTopBouquetsSlider() {
       setSlide(current);
     }
   }
-
 
   if (!prevBtn.dataset.sliderInit) {
     prevBtn.dataset.sliderInit = "top-bouquets";
@@ -131,24 +124,12 @@ export function initTopBouquetsSlider() {
     });
   }
 
-  if (dotsContainer && !dotsContainer.dataset.sliderInit) {
-    dotsContainer.dataset.sliderInit = "top-bouquets";
-    dotsContainer.addEventListener("click", (e) => {
-      const dot = e.target.closest(".dot");
-      if (!dot) return;
-      const dots = Array.from(dotsContainer.querySelectorAll(".dot"));
-      const idx = dots.indexOf(dot);
-      if (idx !== -1) setSlide(idx);
-    });
-  }
-
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
       const wasDesktop = isDesktop;
       isDesktop = window.innerWidth >= BREAKPOINT;
       if (wasDesktop !== isDesktop) {
-        // Crossing breakpoint — reset current to avoid out-of-range state
         current = 0;
       }
       setup();

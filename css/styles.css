@@ -483,6 +483,7 @@ blockquote {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  cursor: pointer;
 }
 
 .product-card__img {
@@ -540,18 +541,12 @@ blockquote {
   border: none;
   padding: 0;
   background-color: rgba(3, 12, 1, 0.2);
-  cursor: pointer;
-  transition: background-color var(--transition);
+  cursor: default;
+  pointer-events: none;
 }
 
-.dot--active,
-.dot:hover {
+.dot--active {
   background-color: var(--color-neutral-darkest);
-}
-
-.dot:focus-visible {
-  outline: 2px solid var(--color-barberry);
-  outline-offset: 2px;
 }
 
 .slider-arrows {
@@ -573,23 +568,35 @@ blockquote {
   transition:
     background-color var(--transition),
     border-color var(--transition),
-    color var(--transition);
+    color var(--transition),
+    opacity var(--transition);
 }
 
-.arrow-btn:hover,
-.arrow-btn:focus-visible {
+.arrow-btn:not(.is-disabled):hover,
+.arrow-btn:not(:disabled):hover,
+.arrow-btn:not(.is-disabled):focus-visible,
+.arrow-btn:not(:disabled):focus-visible {
   background-color: var(--color-harlequin);
   border-color: var(--color-harlequin);
 }
 
-.arrow-btn:active {
+.arrow-btn:not(.is-disabled):active,
+.arrow-btn:not(:disabled):active {
   background-color: var(--color-barberry);
   border-color: var(--color-barberry);
 }
 
-.arrow-btn:focus-visible {
+.arrow-btn:not(.is-disabled):focus-visible,
+.arrow-btn:not(:disabled):focus-visible {
   outline: 2px solid var(--color-barberry);
   outline-offset: 2px;
+}
+
+.arrow-btn.is-disabled,
+.arrow-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+  pointer-events: none;
 }
 
 .arrow-btn__img {
@@ -617,6 +624,7 @@ blockquote {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  cursor: pointer;
 }
 
 .bouquet-card__img {
@@ -674,6 +682,7 @@ blockquote {
   justify-content: space-between;
   gap: 20px;
   padding: 20px;
+  min-height: 228px;
   background-color: var(--color-white);
   border: 1px solid var(--scheme1-border);
   border-radius: var(--radius-md);
@@ -842,7 +851,6 @@ blockquote {
   line-height: 1.5;
   text-align: center;
 }
-
 
 .modal-backdrop {
   position: fixed;

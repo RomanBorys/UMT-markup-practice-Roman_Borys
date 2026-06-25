@@ -26,7 +26,6 @@ export function initReviewsSlider() {
   grid.style.transition = "transform 300ms ease";
   grid.style.willChange = "transform";
 
-
   function getSlideWidth() {
     return clip.offsetWidth;
   }
@@ -69,26 +68,22 @@ export function initReviewsSlider() {
     updateArrows();
   }
 
+  function setDisabled(btn, disabled) {
+    btn.disabled = disabled;
+    btn.classList.toggle("is-disabled", disabled);
+    btn.style.opacity = "";
+    btn.style.cursor = "";
+  }
+
   function updateArrows() {
     if (isDesktop) {
-      prevBtn.disabled = true;
-      nextBtn.disabled = true;
-      prevBtn.style.opacity = "0.35";
-      nextBtn.style.opacity = "0.35";
-      prevBtn.style.cursor = "default";
-      nextBtn.style.cursor = "default";
+      setDisabled(prevBtn, true);
+      setDisabled(nextBtn, true);
       return;
     }
 
-    const atStart = current === 0;
-    const atEnd = current === total - 1;
-
-    prevBtn.disabled = atStart;
-    nextBtn.disabled = atEnd;
-    prevBtn.style.opacity = atStart ? "0.35" : "";
-    nextBtn.style.opacity = atEnd ? "0.35" : "";
-    prevBtn.style.cursor = atStart ? "default" : "";
-    nextBtn.style.cursor = atEnd ? "default" : "";
+    setDisabled(prevBtn, current === 0);
+    setDisabled(nextBtn, current === total - 1);
   }
 
 

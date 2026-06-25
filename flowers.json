@@ -36,7 +36,8 @@
   },
   {
     "img": "https://ftp.goit.study/img/flowers/68498236a1003120791.png",
-    "title": "A vibrant cascade of fuchsia orchids, peonies, and wild clematis entwined with lush, leafy vines. This bouquet evokes the untamed beauty and intrigue of a secret garden getaway.",
+    "title": "A vibrant cascade",
+    "desc": "A vibrant cascade of fuchsia orchids, peonies, and wild clematis entwined with lush, leafy vines. This bouquet evokes the untamed beauty and intrigue of a secret garden getaway.",
     "price": "40",
     "category": "standart"
   },
