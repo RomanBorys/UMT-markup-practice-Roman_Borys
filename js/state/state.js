@@ -1,10 +1,9 @@
 export const state = {
-  staticCount: 8,
+  products: [],
+  loadedCount: 0,
 
-  page: 1,
-  limit: 8,
-
-  total: 0,
+  initialCount: 8,
+  itemsPerClick: 4,
 
   isLoading: false,
 };

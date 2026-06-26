@@ -1,19 +1,36 @@
-const BASE_URL = "./flowers.json";
+const BASE_URL =
+  "https://umt-markup-practice-roman-borys-backend.onrender.com/api/bouquets";
 
+function isValidBouquet(bouquet) {
+  return (
+    Number.isInteger(Number(bouquet?.id)) &&
+    typeof bouquet?.title === "string" &&
+    bouquet.title.trim() !== "" &&
+    typeof bouquet?.photoURL === "string" &&
+    bouquet.photoURL.trim() !== ""
+  );
+}
 
-export async function fetchProductsByPage(page = 1, limit = 8) {
+export async function fetchBouquets() {
   const response = await axios.get(BASE_URL);
 
-  const all = Array.isArray(response.data)
-    ? response.data
-    : (response.data.products ?? []);
+  if (!Array.isArray(response.data)) {
+    throw new Error("Bouquets API returned an invalid response");
+  }
 
-  const valid = all.filter((p) => p.title && p.img);
+  return response.data.filter(isValidBouquet);
+}
 
-  const total = valid.length;
-  const totalPages = Math.ceil(total / limit);
-  const start = (page - 1) * limit;
-  const items = valid.slice(start, start + limit);
+export async function fetchBouquetById(id) {
+  const bouquetId = Number(id);
 
-  return { items, total, totalPages, page };
+  if (!Number.isInteger(bouquetId) || bouquetId <= 0) {
+    throw new Error("Invalid bouquet id");
+  }
+
+  const response = await axios.get(
+    `${BASE_URL}/${bouquetId}`,
+  );
+
+  return response.data;
 }
