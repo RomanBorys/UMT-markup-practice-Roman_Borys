@@ -1,130 +1,286 @@
-const BREAKPOINT = 768;
+const MOBILE_BREAKPOINT = 768;
+const DESKTOP_BREAKPOINT = 835;
+const SLIDES_GAP = 24;
 
 export function initReviewsSlider() {
-  const section = document.querySelector(".feedback");
-  if (!section) return;
+  const section = document.querySelector(
+    ".feedback",
+  );
 
-  const grid = section.querySelector(".reviews-grid");
-  const [prevBtn, nextBtn] = section.querySelectorAll(".arrow-btn");
+  if (!section) {
+    return;
+  }
 
-  if (!grid || !prevBtn || !nextBtn) return;
+  const grid = section.querySelector(
+    ".reviews-grid",
+  );
 
-  const items = Array.from(grid.children); // <li> elements
-  const total = items.length;
-  if (total === 0) return;
+  const [prevButton, nextButton] =
+    section.querySelectorAll(
+      ".slider-arrows .arrow-btn",
+    );
 
-  let current = 0;
-  let isDesktop = window.innerWidth >= BREAKPOINT;
+  if (!grid || !prevButton || !nextButton) {
+    return;
+  }
+
+  if (section.dataset.reviewsSliderInit) {
+    return;
+  }
+
+  section.dataset.reviewsSliderInit = "true";
+
+  let items = [];
+  let currentPage = 0;
   let resizeTimer = null;
 
-  const clip = document.createElement("div");
-  clip.className = "slider-track-clip";
-  clip.style.cssText = "overflow: hidden; width: 100%;";
-  grid.parentNode.insertBefore(clip, grid);
-  clip.appendChild(grid);
+  let clip = grid.parentElement;
 
-  grid.style.transition = "transform 300ms ease";
+  if (
+    !clip?.classList.contains(
+      "slider-track-clip",
+    )
+  ) {
+    clip = document.createElement("div");
+    clip.className = "slider-track-clip";
+
+    grid.parentNode.insertBefore(
+      clip,
+      grid,
+    );
+
+    clip.appendChild(grid);
+  }
+
+  clip.style.overflow = "hidden";
+  clip.style.width = "100%";
+
+  grid.style.transition =
+    "transform 300ms ease";
+
   grid.style.willChange = "transform";
 
-  function getSlideWidth() {
-    return clip.offsetWidth;
+  function getItemsPerPage() {
+    const viewportWidth =
+      window.innerWidth;
+
+    if (
+      viewportWidth <
+      MOBILE_BREAKPOINT
+    ) {
+      return 1;
+    }
+
+    if (
+      viewportWidth <
+      DESKTOP_BREAKPOINT
+    ) {
+      return 2;
+    }
+
+    return 3;
   }
 
-  function applyMobileLayout() {
-    const w = getSlideWidth();
+  function getPageCount() {
+    const itemsPerPage =
+      getItemsPerPage();
+
+    return Math.ceil(
+      items.length / itemsPerPage,
+    );
+  }
+
+  function setDisabled(
+    button,
+    disabled,
+  ) {
+    button.disabled = disabled;
+
+    button.classList.toggle(
+      "is-disabled",
+      disabled,
+    );
+  }
+
+  function updateArrows() {
+    const pageCount = getPageCount();
+    const hasOnePage = pageCount <= 1;
+
+    setDisabled(
+      prevButton,
+      hasOnePage || currentPage === 0,
+    );
+
+    setDisabled(
+      nextButton,
+      hasOnePage ||
+        currentPage >= pageCount - 1,
+    );
+  }
+
+  function applyLayout() {
+    items = Array.from(
+      grid.children,
+    );
+
+    if (items.length === 0) {
+      currentPage = 0;
+
+      grid.style.width = "";
+      grid.style.transform = "";
+
+      updateArrows();
+      return;
+    }
+
+    const itemsPerPage =
+      getItemsPerPage();
+
+    const clipWidth =
+      clip.clientWidth;
+
+    const itemWidth =
+      (
+        clipWidth -
+        SLIDES_GAP *
+          (itemsPerPage - 1)
+      ) / itemsPerPage;
+
+    const trackWidth =
+      items.length * itemWidth +
+      Math.max(
+        items.length - 1,
+        0,
+      ) *
+        SLIDES_GAP;
+
     grid.style.display = "flex";
     grid.style.flexWrap = "nowrap";
-    grid.style.gap = "0px";
-    grid.style.width = `${total * w}px`;
+    grid.style.gap =
+      `${SLIDES_GAP}px`;
+
+    grid.style.width =
+      `${trackWidth}px`;
+
     items.forEach((item) => {
-      item.style.flex = `0 0 ${w}px`;
-      item.style.width = `${w}px`;
-      item.style.boxSizing = "border-box";
+      item.style.flex =
+        `0 0 ${itemWidth}px`;
+
+      item.style.width =
+        `${itemWidth}px`;
+
+      item.style.boxSizing =
+        "border-box";
     });
+
+    const pageCount =
+      getPageCount();
+
+    currentPage = Math.min(
+      currentPage,
+      Math.max(pageCount - 1, 0),
+    );
+
+    updatePosition();
   }
 
-  function resetDesktopLayout() {
-    grid.style.display = "";
-    grid.style.flexWrap = "";
-    grid.style.gap = "";
-    grid.style.width = "";
-    grid.style.transform = "";
-    items.forEach((item) => {
-      item.style.flex = "";
-      item.style.width = "";
-    });
-  }
-
-  function setSlide(index) {
-    if (index < 0) index = 0;
-    if (index > total - 1) index = total - 1;
-    current = index;
-
-    if (!isDesktop) {
-      const offset = current * getSlideWidth();
-      grid.style.transform = `translateX(-${offset}px)`;
+  function updatePosition() {
+    if (items.length === 0) {
+      grid.style.transform = "";
+      updateArrows();
+      return;
     }
+
+    const itemsPerPage =
+      getItemsPerPage();
+
+    const clipWidth =
+      clip.clientWidth;
+
+    const itemWidth =
+      (
+        clipWidth -
+        SLIDES_GAP *
+          (itemsPerPage - 1)
+      ) / itemsPerPage;
+
+    const pageOffset =
+      currentPage *
+      itemsPerPage *
+      (itemWidth + SLIDES_GAP);
+
+    grid.style.transform =
+      `translate3d(-${pageOffset}px, 0, 0)`;
 
     updateArrows();
   }
 
-  function setDisabled(btn, disabled) {
-    btn.disabled = disabled;
-    btn.classList.toggle("is-disabled", disabled);
-    btn.style.opacity = "";
-    btn.style.cursor = "";
+  function setPage(page) {
+    const pageCount =
+      getPageCount();
+
+    currentPage = Math.min(
+      Math.max(page, 0),
+      Math.max(pageCount - 1, 0),
+    );
+
+    updatePosition();
   }
 
-  function updateArrows() {
-    if (isDesktop) {
-      setDisabled(prevBtn, true);
-      setDisabled(nextBtn, true);
-      return;
-    }
+  function refreshItems({
+    focusLast = false,
+  } = {}) {
+    items = Array.from(
+      grid.children,
+    );
 
-    setDisabled(prevBtn, current === 0);
-    setDisabled(nextBtn, current === total - 1);
-  }
-
-
-  function setup() {
-    isDesktop = window.innerWidth >= BREAKPOINT;
-    if (isDesktop) {
-      resetDesktopLayout();
-      updateArrows();
+    if (focusLast) {
+      currentPage = Math.max(
+        getPageCount() - 1,
+        0,
+      );
     } else {
-      if (current >= total) current = total - 1;
-      applyMobileLayout();
-      setSlide(current);
+      currentPage = 0;
     }
+
+    applyLayout();
   }
 
+  prevButton.addEventListener(
+    "click",
+    () => {
+      setPage(currentPage - 1);
+    },
+  );
 
-  if (!prevBtn.dataset.sliderInit) {
-    prevBtn.dataset.sliderInit = "reviews";
-    prevBtn.addEventListener("click", () => {
-      if (!isDesktop) setSlide(current - 1);
-    });
-  }
+  nextButton.addEventListener(
+    "click",
+    () => {
+      setPage(currentPage + 1);
+    },
+  );
 
-  if (!nextBtn.dataset.sliderInit) {
-    nextBtn.dataset.sliderInit = "reviews";
-    nextBtn.addEventListener("click", () => {
-      if (!isDesktop) setSlide(current + 1);
-    });
-  }
+  document.addEventListener(
+    "feedbacks:updated",
+    (event) => {
+      refreshItems({
+        focusLast: Boolean(
+          event.detail?.focusLast,
+        ),
+      });
+    },
+  );
 
-  window.addEventListener("resize", () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-      const wasDesktop = isDesktop;
-      isDesktop = window.innerWidth >= BREAKPOINT;
-      if (wasDesktop !== isDesktop) {
-        current = 0;
-      }
-      setup();
-    }, 120);
-  });
+  window.addEventListener(
+    "resize",
+    () => {
+      clearTimeout(resizeTimer);
 
-  setup();
+      resizeTimer = setTimeout(() => {
+        currentPage = 0;
+        applyLayout();
+      }, 120);
+    },
+  );
+  refreshItems();
 }
