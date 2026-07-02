@@ -25,10 +25,17 @@ export function createModalMarkup({
   description,
   price,
 }) {
-  const safePhotoURL = escapeHtml(photoURL);
-  const safeTitle = escapeHtml(title);
-  const safeDescription = escapeHtml(description);
-  const safePrice = formatPrice(price);
+  const safePhotoURL =
+    escapeHtml(photoURL);
+
+  const safeTitle =
+    escapeHtml(title);
+
+  const safeDescription =
+    escapeHtml(description);
+
+  const safePrice =
+    formatPrice(price);
 
   return `
     <div class="modal__content">
@@ -41,9 +48,17 @@ export function createModalMarkup({
       />
 
       <div class="modal__info">
-        <h2 class="modal__title">${safeTitle}</h2>
-        <p class="modal__price">$${safePrice}</p>
-        <p class="modal__desc">${safeDescription}</p>
+        <h2 class="modal__title">
+          ${safeTitle}
+        </h2>
+
+        <p class="modal__price">
+          $${safePrice}
+        </p>
+
+        <p class="modal__desc">
+          ${safeDescription}
+        </p>
 
         <div class="modal__actions">
           <button
@@ -58,6 +73,8 @@ export function createModalMarkup({
             type="number"
             value="1"
             min="1"
+            max="99"
+            step="1"
             aria-label="Quantity"
           />
         </div>

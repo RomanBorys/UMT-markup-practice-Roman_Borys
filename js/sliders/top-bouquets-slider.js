@@ -1,140 +1,353 @@
-const BREAKPOINT = 768;
+const TABLET_BREAKPOINT = 768;
+const DESKTOP_BREAKPOINT = 1024;
+const SLIDES_GAP = 32;
 
 export function initTopBouquetsSlider() {
-  const section = document.querySelector(".bestsellers");
-  if (!section) return;
+  const section = document.querySelector(
+    ".bestsellers",
+  );
 
-  const grid = section.querySelector(".products-grid");
-  const dotsContainer = section.querySelector(".slider-dots");
-  const [prevBtn, nextBtn] = section.querySelectorAll(".arrow-btn");
+  if (!section) {
+    return;
+  }
 
-  if (!grid || !prevBtn || !nextBtn) return;
+  const grid = section.querySelector(
+    ".products-grid",
+  );
 
-  const items = Array.from(grid.children); // <li> elements
-  const total = items.length;
-  if (total === 0) return;
+  const dotsContainer =
+    section.querySelector(
+      ".slider-dots",
+    );
 
-  let current = 0;
-  let isDesktop = window.innerWidth >= BREAKPOINT;
+  const [prevButton, nextButton] =
+    section.querySelectorAll(
+      ".slider-arrows .arrow-btn",
+    );
+
+  if (
+    !grid ||
+    !dotsContainer ||
+    !prevButton ||
+    !nextButton
+  ) {
+    return;
+  }
+
+  if (
+    section.dataset.topBouquetsSliderInit
+  ) {
+    return;
+  }
+
+  section.dataset.topBouquetsSliderInit =
+    "true";
+
+  let items = [];
+  let currentPage = 0;
   let resizeTimer = null;
 
-  const clip = document.createElement("div");
-  clip.className = "slider-track-clip";
-  clip.style.cssText = "overflow: hidden; width: 100%;";
-  grid.parentNode.insertBefore(clip, grid);
-  clip.appendChild(grid);
+  let clip = grid.parentElement;
 
-  grid.style.transition = "transform 300ms ease";
-  grid.style.willChange = "transform";
+  if (
+    !clip?.classList.contains(
+      "slider-track-clip",
+    )
+  ) {
+    clip = document.createElement("div");
+    clip.className =
+      "slider-track-clip";
 
-  function getSlideWidth() {
-    return clip.offsetWidth;
+    grid.parentNode.insertBefore(
+      clip,
+      grid,
+    );
+
+    clip.appendChild(grid);
   }
 
-  function applyMobileLayout() {
-    const w = getSlideWidth();
-    grid.style.display = "flex";
-    grid.style.flexWrap = "nowrap";
-    grid.style.gap = "0px";
-    grid.style.width = `${total * w}px`;
-    items.forEach((item) => {
-      item.style.flex = `0 0 ${w}px`;
-      item.style.width = `${w}px`;
-      item.style.boxSizing = "border-box";
-    });
-  }
+  clip.style.overflow = "hidden";
+  clip.style.width = "100%";
 
-  function resetDesktopLayout() {
-    grid.style.display = "";
-    grid.style.flexWrap = "";
-    grid.style.gap = "";
-    grid.style.width = "";
-    grid.style.transform = "";
-    items.forEach((item) => {
-      item.style.flex = "";
-      item.style.width = "";
-    });
-  }
+  grid.style.transition =
+    "transform 300ms ease";
 
-  function setSlide(index) {
-    if (index < 0) index = 0;
-    if (index > total - 1) index = total - 1;
-    current = index;
+  grid.style.willChange =
+    "transform";
 
-    if (!isDesktop) {
-      const offset = current * getSlideWidth();
-      grid.style.transform = `translateX(-${offset}px)`;
+  function getItemsPerPage() {
+    if (
+      window.innerWidth <
+      TABLET_BREAKPOINT
+    ) {
+      return 1;
     }
+
+    if (
+      window.innerWidth <
+      DESKTOP_BREAKPOINT
+    ) {
+      return 2;
+    }
+
+    return 3;
+  }
+
+  function getPageCount() {
+    return Math.ceil(
+      items.length /
+        getItemsPerPage(),
+    );
+  }
+
+  function setDisabled(
+    button,
+    disabled,
+  ) {
+    button.disabled = disabled;
+
+    button.classList.toggle(
+      "is-disabled",
+      disabled,
+    );
+  }
+
+  function updateArrows() {
+    const pageCount =
+      getPageCount();
+
+    setDisabled(
+      prevButton,
+      pageCount <= 1 ||
+        currentPage === 0,
+    );
+
+    setDisabled(
+      nextButton,
+      pageCount <= 1 ||
+        currentPage >=
+          pageCount - 1,
+    );
+  }
+
+  function renderDots() {
+    const pageCount =
+      getPageCount();
+
+    dotsContainer.innerHTML =
+      Array.from(
+        {
+          length: pageCount,
+        },
+        (_, index) => `
+          <button
+            class="dot${
+              index === currentPage
+                ? " dot--active"
+                : ""
+            }"
+            type="button"
+            role="tab"
+            aria-selected="${
+              index === currentPage
+            }"
+            aria-label="Go to bestsellers page ${
+              index + 1
+            }"
+            data-page="${index}"
+          ></button>
+        `,
+      ).join("");
+  }
+
+  function updateDots() {
+    const dots =
+      dotsContainer.querySelectorAll(
+        ".dot",
+      );
+
+    dots.forEach((dot, index) => {
+      const active =
+        index === currentPage;
+
+      dot.classList.toggle(
+        "dot--active",
+        active,
+      );
+
+      dot.setAttribute(
+        "aria-selected",
+        String(active),
+      );
+    });
+  }
+
+  function getItemWidth() {
+    const itemsPerPage =
+      getItemsPerPage();
+
+    return (
+      clip.clientWidth -
+      SLIDES_GAP *
+        (itemsPerPage - 1)
+    ) / itemsPerPage;
+  }
+
+  function updatePosition() {
+    if (items.length === 0) {
+      grid.style.transform = "";
+      updateArrows();
+      updateDots();
+      return;
+    }
+
+    const itemsPerPage =
+      getItemsPerPage();
+
+    const itemWidth =
+      getItemWidth();
+
+    const offset =
+      currentPage *
+      itemsPerPage *
+      (itemWidth + SLIDES_GAP);
+
+    grid.style.transform =
+      `translate3d(-${offset}px, 0, 0)`;
 
     updateDots();
     updateArrows();
   }
 
-  function updateDots() {
-    if (!dotsContainer) return;
-    const dots = dotsContainer.querySelectorAll(".dot");
-    dots.forEach((dot, i) => {
-      const active = i === current;
-      dot.classList.toggle("dot--active", active);
-      dot.setAttribute("aria-selected", String(active));
-    });
+  function setPage(page) {
+    const pageCount =
+      getPageCount();
+
+    currentPage = Math.min(
+      Math.max(page, 0),
+      Math.max(pageCount - 1, 0),
+    );
+
+    updatePosition();
   }
 
-  function setDisabled(btn, disabled) {
-    btn.disabled = disabled;
-    btn.classList.toggle("is-disabled", disabled);
-    btn.style.opacity = "";
-    btn.style.cursor = "";
-  }
+  function applyLayout() {
+    items = Array.from(
+      grid.children,
+    );
 
-  function updateArrows() {
-    if (isDesktop) {
-      setDisabled(prevBtn, true);
-      setDisabled(nextBtn, true);
+    if (items.length === 0) {
+      currentPage = 0;
+
+      grid.style.width = "";
+      grid.style.transform = "";
+
+      dotsContainer.innerHTML = "";
+
+      updateArrows();
       return;
     }
 
-    setDisabled(prevBtn, current === 0);
-    setDisabled(nextBtn, current === total - 1);
-  }
+    const itemWidth =
+      getItemWidth();
 
-  function setup() {
-    isDesktop = window.innerWidth >= BREAKPOINT;
-    if (isDesktop) {
-      resetDesktopLayout();
-      updateArrows();
-    } else {
-      if (current >= total) current = total - 1;
-      applyMobileLayout();
-      setSlide(current);
-    }
-  }
+    const trackWidth =
+      items.length * itemWidth +
+      Math.max(
+        items.length - 1,
+        0,
+      ) *
+        SLIDES_GAP;
 
-  if (!prevBtn.dataset.sliderInit) {
-    prevBtn.dataset.sliderInit = "top-bouquets";
-    prevBtn.addEventListener("click", () => {
-      if (!isDesktop) setSlide(current - 1);
+    grid.style.display = "flex";
+    grid.style.flexWrap = "nowrap";
+    grid.style.gap =
+      `${SLIDES_GAP}px`;
+    grid.style.width =
+      `${trackWidth}px`;
+
+    items.forEach((item) => {
+      item.style.flex =
+        `0 0 ${itemWidth}px`;
+
+      item.style.width =
+        `${itemWidth}px`;
+
+      item.style.boxSizing =
+        "border-box";
     });
+
+    const pageCount =
+      getPageCount();
+
+    currentPage = Math.min(
+      currentPage,
+      Math.max(pageCount - 1, 0),
+    );
+
+    renderDots();
+    updatePosition();
   }
 
-  if (!nextBtn.dataset.sliderInit) {
-    nextBtn.dataset.sliderInit = "top-bouquets";
-    nextBtn.addEventListener("click", () => {
-      if (!isDesktop) setSlide(current + 1);
-    });
+  function refreshItems() {
+    currentPage = 0;
+    applyLayout();
   }
 
-  window.addEventListener("resize", () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-      const wasDesktop = isDesktop;
-      isDesktop = window.innerWidth >= BREAKPOINT;
-      if (wasDesktop !== isDesktop) {
-        current = 0;
+  prevButton.addEventListener(
+    "click",
+    () => {
+      setPage(currentPage - 1);
+    },
+  );
+
+  nextButton.addEventListener(
+    "click",
+    () => {
+      setPage(currentPage + 1);
+    },
+  );
+
+  dotsContainer.addEventListener(
+    "click",
+    (event) => {
+      const dot = event.target.closest(
+        ".dot",
+      );
+
+      if (!dot) {
+        return;
       }
-      setup();
-    }, 120);
-  });
 
-  setup();
+      const page = Number(
+        dot.dataset.page,
+      );
+
+      if (Number.isInteger(page)) {
+        setPage(page);
+      }
+    },
+  );
+
+  document.addEventListener(
+    "top-bouquets:updated",
+    refreshItems,
+  );
+
+  window.addEventListener(
+    "resize",
+    () => {
+      clearTimeout(resizeTimer);
+
+      resizeTimer = setTimeout(
+        () => {
+          currentPage = 0;
+          applyLayout();
+        },
+        120,
+      );
+    },
+  );
+
+  refreshItems();
 }

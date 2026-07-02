@@ -1,9 +1,11 @@
 import {
   fetchBouquetById,
 } from "../api/products-api.js";
+
 import {
   createModalMarkup,
 } from "../render/render-modal.js";
+
 import {
   initOrderModal,
   openOrderModal,
@@ -13,9 +15,11 @@ import {
 const backdrop = document.querySelector(
   ".modal-backdrop",
 );
-const closeBtn = document.querySelector(
+
+const closeButton = document.querySelector(
   ".modal__close",
 );
+
 const modalBody = document.querySelector(
   ".modal__body",
 );
@@ -26,7 +30,10 @@ export function openModal(modalElement) {
   }
 
   modalElement.classList.add("is-open");
-  document.body.classList.add("no-scroll");
+
+  document.body.classList.add(
+    "no-scroll",
+  );
 }
 
 export function closeModal(modalElement) {
@@ -34,18 +41,24 @@ export function closeModal(modalElement) {
     return;
   }
 
-  modalElement.classList.remove("is-open");
+  modalElement.classList.remove(
+    "is-open",
+  );
 
   const anyOpen = document.querySelector(
     ".modal-backdrop.is-open, .order-backdrop.is-open",
   );
 
   if (!anyOpen) {
-    document.body.classList.remove("no-scroll");
+    document.body.classList.remove(
+      "no-scroll",
+    );
   }
 }
 
-function extractStaticProductFromCard(card) {
+function extractStaticProductFromCard(
+  card,
+) {
   const image = card.querySelector("img");
 
   const srcset = image
@@ -76,7 +89,13 @@ function extractStaticProductFromCard(card) {
     .replace(/^\$/, "")
     .trim();
 
+  const id = Number(card.dataset.id);
+
   return {
+    id:
+      Number.isInteger(id) && id > 0
+        ? id
+        : null,
     photoURL,
     title,
     description,
@@ -92,16 +111,46 @@ function renderProductModal(product) {
   modalBody.innerHTML =
     createModalMarkup(product);
 
-  const buyButton = modalBody.querySelector(
-    ".modal__buy-btn",
+  const buyButton =
+    modalBody.querySelector(
+      ".modal__buy-btn",
+    );
+
+  const quantityInput =
+    modalBody.querySelector(
+      ".modal__qty",
+    );
+
+  const bouquetId = Number(
+    product.id,
   );
 
-  buyButton?.addEventListener(
-    "click",
-    openOrderModal,
-  );
+  const canCreateOrder =
+    Number.isInteger(bouquetId) &&
+    bouquetId > 0;
 
-  closeBtn?.focus();
+  if (buyButton) {
+    buyButton.disabled =
+      !canCreateOrder;
+
+    buyButton.addEventListener(
+      "click",
+      () => {
+        if (!canCreateOrder) {
+          return;
+        }
+
+        openOrderModal({
+          bouquetId,
+          quantity: Number(
+            quantityInput?.value ?? 1,
+          ),
+        });
+      },
+    );
+  }
+
+  closeButton?.focus();
 }
 
 function openStaticProductModal(card) {
@@ -139,7 +188,9 @@ function closeProductModal() {
   setTimeout(() => {
     if (
       backdrop &&
-      !backdrop.classList.contains("is-open") &&
+      !backdrop.classList.contains(
+        "is-open",
+      ) &&
       modalBody
     ) {
       modalBody.innerHTML = "";
@@ -148,7 +199,9 @@ function closeProductModal() {
 }
 
 function handleCardActivation(card) {
-  const bouquetId = Number(card.dataset.id);
+  const bouquetId = Number(
+    card.dataset.id,
+  );
 
   if (
     Number.isInteger(bouquetId) &&
@@ -190,6 +243,7 @@ function handleCardKeydown(event) {
   }
 
   event.preventDefault();
+
   handleCardActivation(card);
 }
 
@@ -209,7 +263,9 @@ function handleGlobalKeydown(event) {
   }
 
   if (
-    backdrop?.classList.contains("is-open")
+    backdrop?.classList.contains(
+      "is-open",
+    )
   ) {
     closeProductModal();
   }
@@ -221,15 +277,20 @@ function initModal() {
   }
 
   const bouquetsGrid =
-    document.querySelector(".bouquets-grid");
+    document.querySelector(
+      ".bouquets-grid",
+    );
 
   const productsGrid =
-    document.querySelector(".products-grid");
+    document.querySelector(
+      ".products-grid",
+    );
 
   bouquetsGrid?.addEventListener(
     "click",
     handleCardClick,
   );
+
   bouquetsGrid?.addEventListener(
     "keydown",
     handleCardKeydown,
@@ -240,7 +301,12 @@ function initModal() {
     handleCardClick,
   );
 
-  closeBtn?.addEventListener(
+  productsGrid?.addEventListener(
+    "keydown",
+    handleCardKeydown,
+  );
+
+  closeButton?.addEventListener(
     "click",
     closeProductModal,
   );
@@ -259,7 +325,10 @@ function initModal() {
     handleGlobalKeydown,
   );
 
-  initOrderModal({ closeModal });
+  initOrderModal({
+    closeModal,
+    onSuccess: closeProductModal,
+  });
 }
 
 initModal();

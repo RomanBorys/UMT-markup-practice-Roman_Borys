@@ -8,6 +8,7 @@
       content="Flora — expertly crafted flower bouquets for every occasion. Shop our bestsellers online."
     />
     <title>Flora — Fresh Flower Bouquets</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -21,6 +22,7 @@
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="icon" type="image/svg+xml" href="./assets/icons/icons.svg" />
   </head>
+
   <body>
     <header class="header">
       <div class="container header__inner">
@@ -43,9 +45,9 @@
           </ul>
         </nav>
 
-        <a class="btn btn--primary header__cta" href="#bestsellers"
-          >Explore Bouquets</a
-        >
+        <a class="btn btn--primary header__cta" href="#bestsellers">
+          Explore Bouquets
+        </a>
 
         <button
           class="burger"
@@ -73,9 +75,9 @@
               bouquet. Our expertly crafted arrangements are designed to bring
               joy and elegance to your celebrations.
             </p>
-            <a class="btn btn--primary" href="#bestsellers"
-              >Explore Our Bestsellers</a
-            >
+            <a class="btn btn--primary" href="#bestsellers">
+              Explore Our Bestsellers
+            </a>
           </div>
         </div>
       </section>
@@ -94,6 +96,7 @@
               height="85"
               aria-hidden="true"
             />
+
             <div>
               <h2 class="section__title" id="about-title">
                 Our Passion for Floral Artistry
@@ -106,6 +109,7 @@
               </p>
             </div>
           </div>
+
           <img
             class="about__img"
             src="./assets/images/elevated-view-female-florist-arranging-white-peony-flowers-shop-.png"
@@ -128,113 +132,30 @@
           <h2 class="section__title" id="bestsellers-title">
             Top-Selling Bouquets
           </h2>
-          <ul class="products-grid">
-            <li>
-              <div class="product-card">
-                <img
-                  class="product-card__img"
-                  src="./assets/images/perfect-gift-wonderful-flowers-womens-day-tender-smiling-brunet.png"
-                  srcset="
-                    ./assets/images/perfect-gift-wonderful-flowers-womens-day-tender-smiling-brunet-@2x.png 2x
-                  "
-                  alt="Spring Elegance bouquet"
-                  width="405"
-                  height="320"
-                />
-                <div class="product-card__body">
-                  <h3 class="product-card__name">Spring Elegance</h3>
-                  <p class="product-card__desc">
-                    A delicate blend of peonies, tulips, and roses — perfect for
-                    springtime gifting and bright smiles.
-                  </p>
-                  <p class="product-card__price" aria-label="Price 35 dollars">
-                    $35
-                  </p>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="product-card">
-                <img
-                  class="product-card__img"
-                  src="./assets/images/bridal-arrangement-wedding-flowers-closeup-decoration-roses-flow.png"
-                  srcset="
-                    ./assets/images/bridal-arrangement-wedding-flowers-closeup-decoration-roses-flow@2x.png 2x
-                  "
-                  alt="Berry Chic bouquet"
-                  width="405"
-                  height="320"
-                />
-                <div class="product-card__body">
-                  <h3 class="product-card__name">Berry Chic</h3>
-                  <p class="product-card__desc">
-                    A stylish composition of roses, seasonal greenery, and
-                    vibrant berries — a bold and elegant floral statement.
-                  </p>
-                  <p class="product-card__price" aria-label="Price 40 dollars">
-                    $40
-                  </p>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="product-card">
-                <img
-                  class="product-card__img"
-                  src="./assets/images/mixed-flower-bouquet-wooden-table.png"
-                  srcset="
-                    ./assets/images/mixed-flower-bouquet-wooden-table@2x.png 2x
-                  "
-                  alt="Lavender Dream bouquet"
-                  width="405"
-                  height="320"
-                />
-                <div class="product-card__body">
-                  <h3 class="product-card__name">Lavender Dream</h3>
-                  <p class="product-card__desc">
-                    A rich bouquet with lavender, lisianthus, and roses — ideal
-                    for those who love deep hues and gentle fragrance.
-                  </p>
-                  <p class="product-card__price" aria-label="Price 55 dollars">
-                    $55
-                  </p>
-                </div>
-              </div>
-            </li>
-          </ul>
+
+          <p
+            class="bestsellers__status"
+            role="status"
+            aria-live="polite"
+          ></p>
+
+          <ul
+            class="products-grid"
+            aria-label="Top-selling bouquets"
+          ></ul>
+
           <div class="slider-controls">
             <div
               class="slider-dots"
               role="tablist"
               aria-label="Bestsellers pagination"
-            >
-              <button
-                class="dot dot--active"
-                type="button"
-                role="tab"
-                aria-selected="true"
-                aria-label="Go to slide 1"
-              ></button>
-              <button
-                class="dot"
-                type="button"
-                role="tab"
-                aria-selected="false"
-                aria-label="Go to slide 2"
-              ></button>
-              <button
-                class="dot"
-                type="button"
-                role="tab"
-                aria-selected="false"
-                aria-label="Go to slide 3"
-              ></button>
-            </div>
+            ></div>
+
             <div class="slider-arrows">
               <button
                 class="arrow-btn"
                 type="button"
-                aria-label="Previous bestseller"
+                aria-label="Previous bestsellers page"
               >
                 <img
                   src="./assets/icons/left-arrow-alt_2.svg"
@@ -245,10 +166,11 @@
                   class="arrow-btn__img"
                 />
               </button>
+
               <button
                 class="arrow-btn"
                 type="button"
-                aria-label="Next bestseller"
+                aria-label="Next bestsellers page"
               >
                 <img
                   src="./assets/icons/right-arrow-alt_2.svg"
@@ -368,16 +290,18 @@
         aria-labelledby="contacts-title"
       >
         <div class="container contacts__inner">
-
           <div class="contacts__top">
             <div class="contacts__text-col">
               <p class="contacts__tagline">Connect</p>
-              <h2 class="contacts__title" id="contacts-title">Get in Touch</h2>
+              <h2 class="contacts__title" id="contacts-title">
+                Get in Touch
+              </h2>
               <p class="contacts__desc">
                 We&#39;re here to assist you with all your floral needs and
                 inquiries.
               </p>
             </div>
+
             <address class="contacts__address">
               <div class="contacts__row">
                 <img
@@ -388,13 +312,15 @@
                   aria-hidden="true"
                   class="icon icon--contact"
                 />
+
                 <div>
                   <h3 class="contacts__label">Phone</h3>
-                  <a class="contacts__link" href="tel:+15551234567"
-                    >+1 (555) 123-4567</a
-                  >
+                  <a class="contacts__link" href="tel:+15551234567">
+                    +1 (555) 123-4567
+                  </a>
                 </div>
               </div>
+
               <div class="contacts__row">
                 <img
                   src="./assets/icons/map.svg"
@@ -404,6 +330,7 @@
                   aria-hidden="true"
                   class="icon icon--contact"
                 />
+
                 <div>
                   <h3 class="contacts__label">Store</h3>
                   <a
@@ -411,12 +338,14 @@
                     href="https://www.google.com/maps/search/?api=1&query=456+Floral+Ave+Sydney+NSW+2000+AU"
                     target="_blank"
                     rel="noopener noreferrer"
-                    >456 Floral Ave, Sydney NSW 2000 AU</a
                   >
+                    456 Floral Ave, Sydney NSW 2000 AU
+                  </a>
                 </div>
               </div>
             </address>
           </div>
+
           <img
             class="contacts__img"
             src="./assets/images/photo-florist-holding-beautiful-flowers-flower-shop.png"
@@ -445,6 +374,7 @@
             height="125"
           />
         </a>
+
         <nav aria-label="Footer navigation">
           <ul class="footer__nav">
             <li><a class="footer__link" href="#about-us">About Us</a></li>
@@ -454,6 +384,7 @@
             <li><a class="footer__link" href="#contacts">Contacts</a></li>
           </ul>
         </nav>
+
         <div class="footer__socials">
           <a
             href="https://www.facebook.com/"
@@ -471,6 +402,7 @@
               class="social-link__img"
             />
           </a>
+
           <a
             href="https://www.instagram.com/"
             class="social-link"
@@ -487,6 +419,7 @@
               class="social-link__img"
             />
           </a>
+
           <a
             href="https://x.com/"
             class="social-link"
@@ -505,6 +438,7 @@
           </a>
         </div>
       </div>
+
       <div class="footer__bottom">
         <div class="container">
           <p class="footer__copy">&#169; 2025 Flora. All rights reserved.</p>
@@ -529,6 +463,7 @@
               height="36"
             />
           </a>
+
           <button
             class="burger burger--close"
             type="button"
@@ -541,22 +476,23 @@
             </svg>
           </button>
         </div>
+
         <nav aria-label="Mobile navigation">
           <ul class="mobile-menu__list">
             <li><a class="mobile-menu__link" href="#about-us">About Us</a></li>
-            <li>
-              <a class="mobile-menu__link" href="#bestsellers">Bestsellers</a>
-            </li>
+            <li><a class="mobile-menu__link" href="#bestsellers">Bestsellers</a></li>
             <li><a class="mobile-menu__link" href="#bouquets">Bouquets</a></li>
             <li><a class="mobile-menu__link" href="#feedback">Feedback</a></li>
             <li><a class="mobile-menu__link" href="#contacts">Contacts</a></li>
           </ul>
         </nav>
-        <a class="btn btn--primary mobile-menu__cta" href="#bouquets"
-          >Explore Bouquets</a
-        >
+
+        <a class="btn btn--primary mobile-menu__cta" href="#bouquets">
+          Explore Bouquets
+        </a>
       </div>
     </div>
+
     <div class="mobile-menu__overlay" aria-hidden="true"></div>
 
     <div
@@ -575,7 +511,9 @@
             <use href="./assets/icons/icons.svg#icon-close"></use>
           </svg>
         </button>
+
         <h2 class="order-modal__title" id="order-modal-title">Order</h2>
+
         <form class="order-form" id="order-form" novalidate>
           <div class="order-form__field">
             <label class="order-form__label" for="order-name">Name*</label>
@@ -589,6 +527,7 @@
               autocomplete="given-name"
             />
           </div>
+
           <div class="order-form__field">
             <label class="order-form__label" for="order-phone">Phone*</label>
             <input
@@ -601,6 +540,7 @@
               autocomplete="tel"
             />
           </div>
+
           <div class="order-form__field">
             <label class="order-form__label" for="order-address">Address</label>
             <input
@@ -612,6 +552,7 @@
               autocomplete="street-address"
             />
           </div>
+
           <div class="order-form__field">
             <label class="order-form__label" for="order-message">Message</label>
             <textarea
@@ -622,11 +563,21 @@
               rows="5"
             ></textarea>
           </div>
+
           <div class="order-form__footer">
-            <button class="btn btn--primary order-form__submit" type="submit">
+            <button
+              class="btn btn--primary order-form__submit"
+              type="submit"
+            >
               Go to Checkout
             </button>
           </div>
+
+          <p
+            class="order-form__status"
+            role="status"
+            aria-live="polite"
+          ></p>
         </form>
       </div>
     </div>
@@ -638,11 +589,16 @@
       aria-label="Product Details"
     >
       <div class="modal">
-        <button class="modal__close" type="button" aria-label="Close modal">
+        <button
+          class="modal__close"
+          type="button"
+          aria-label="Close modal"
+        >
           <svg class="icon" width="24" height="24" aria-hidden="true">
             <use href="./assets/icons/icons.svg#icon-close"></use>
           </svg>
         </button>
+
         <div class="modal__body"></div>
       </div>
     </div>

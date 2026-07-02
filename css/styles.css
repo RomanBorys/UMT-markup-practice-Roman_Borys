@@ -473,6 +473,14 @@ blockquote {
   text-align: center;
 }
 
+.bestsellers__status {
+  min-height: 24px;
+  font-size: 15px;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--color-neutral-dark);
+}
+
 .products-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -1241,6 +1249,19 @@ blockquote {
   padding: 0;
   font-size: 16px;
   font-weight: 700;
+}
+
+.order-form__submit:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.order-form__status {
+  min-height: 24px;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--color-neutral-dark);
 }
 
 @media (min-width: 768px) {
